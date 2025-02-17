@@ -1,5 +1,21 @@
 const mongoose = require('mongoose');
 
+const commentSchema = new Schema({
+    username: {
+        type: String,
+    },
+    message:{
+        type: String,
+        required: true
+    },
+    commentedAt:{
+        type: Date,
+        default: Date.now
+    }
+})
+
+
+
 const blogPost = mongoose.Schema({
     title : {
         type : String,
@@ -21,6 +37,8 @@ const blogPost = mongoose.Schema({
         type : String,
         default : "General"
     },
+    comment: [commentSchema],
+
     likes : {
         type : [String]
     },
@@ -39,18 +57,4 @@ const blogPost = mongoose.Schema({
 )
 
 
-const commentSchema = new Schema({
-    username: {
-        type: String,
-    },
-    message:{
-        type: String,
-        required: true
-    },
-    commentedAt:{
-        type: Date,
-        default: Date.now
-    }
-})
-
-module.exports = mongoose.model({commentSchema, blogPost});
+module.exports = mongoose.model("blogPost", blogPost);
